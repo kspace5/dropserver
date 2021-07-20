@@ -30,10 +30,10 @@
 
     .dropbox {
       text-align: center;
-      line-height: 100px;
+      line-height: 50px;
       font-size: 30px;
       border: 1px dotted;
-      width: 50%;
+      width: 70%;
       height:50%;
     }
   </style>
@@ -42,7 +42,7 @@
 
 <body>
   <div class="dropbox">
-  <div> Please Drag a File to the Drop space</div>
+  <div> drag one or more file(s) here to upload</div>
   <div> Or</div>
 
   <input id="upload-file" type="file" multiple />
@@ -66,12 +66,16 @@
           processData: false,
           contentType: false
         }).done((resData) => {
-          //alert(resData.message);
-          var fileList = []
+          var fileLinkList = []
           Array.from(files).forEach(file => {
-            fileList.push(window.location.href.replace('drop/widget.html','store/') + file.name)
+            var filelink = $('<a></a>').text(file.name)
+            filelink.attr('href', window.location.href.replace('drop/widget.html','store/') + file.name)
+            fileLinkList.push(filelink)
           });
-          $('.messages').append($('<div></div>').text('Uploaded: ' + fileList))
+          $('.messages').append($('<div></div>').text('uploaded:'));
+          for (i in fileLinkList) {
+            $('.messages').append($('<div></div>').append(fileLinkList[i]));
+          }
         }).fail((jqXHR, textStatus, errorThrown) => {
           alert(errorThrown);
         });
