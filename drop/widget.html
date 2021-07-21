@@ -12,7 +12,11 @@
   <meta name="author" content="Kineviz inc.">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+  <script>
+    function getDateString() {
+      return new Date().toISOString().replace('T', ' ').substr(0, 10).replaceAll('-','').replaceAll(' ','');
+    }
+  </script>
   <style>
     html {
       height: 100%;
@@ -53,7 +57,7 @@
       if (files.length > 0) {
         let formData = new FormData();
         //Add custom path. will auto create the dir ./YourCustomPath, and upload the files to the ./customPath
-        formData.append('pathName', '/upload');
+        formData.append('pathName', '/upload/' + getDateString() );
         
         Array.from(files).forEach(file => {
           formData.append('files', file, file.name);
@@ -69,7 +73,7 @@
           var fileLinkList = []
           Array.from(files).forEach(file => {
             var filelink = $('<a></a>').text(file.name)
-            filelink.attr('href', window.location.href.replace('drop/widget.html','upload/') + file.name)
+            filelink.attr('href', window.location.href.replace('drop/widget.html','upload/' + getDateString() + '/') + file.name)
             fileLinkList.push(filelink)
           });
           $('.messages').append($('<div></div>').text('uploaded:'));
