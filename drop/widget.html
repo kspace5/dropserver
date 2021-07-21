@@ -53,7 +53,7 @@
       if (files.length > 0) {
         let formData = new FormData();
         //Add custom path. will auto create the dir ./YourCustomPath, and upload the files to the ./customPath
-        formData.append('pathName', 'store');
+        formData.append('pathName', '/upload');
         
         Array.from(files).forEach(file => {
           formData.append('files', file, file.name);
@@ -69,7 +69,7 @@
           var fileLinkList = []
           Array.from(files).forEach(file => {
             var filelink = $('<a></a>').text(file.name)
-            filelink.attr('href', window.location.href.replace('drop/widget.html','store/') + file.name)
+            filelink.attr('href', window.location.href.replace('drop/widget.html','upload/') + file.name)
             fileLinkList.push(filelink)
           });
           $('.messages').append($('<div></div>').text('uploaded:'));

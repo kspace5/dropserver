@@ -1,26 +1,26 @@
-FROM node:16-alpine
+FROM node:14
 
-LABEL maintainer="Infinity"
+# Create app directory
+WORKDIR /usr/src/app
 
-#app directory
-WORKDIR /data
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-RUN apk --no-cache add \
-      ca-certificates \
-      fuse 
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-# allow access to volume by different user to enable UIDs other than root when using volumes
-RUN echo user_allow_other >> /etc/fuse.conf
-
-# Install  files-upload-server
-RUN npm install files-upload-server -g
-
-RUN mkdir -p /data
-VOLUME /data
+# Bundle app source
+COPY . .
 
 EXPOSE 8008
 
 #For Release 
 ENV NODE_ENV=production
 
-CMD ["sh","-c","cd /data && files-upload-server -s"]
+RUN mkdir -p /data
+VOLUME /data
+
+CMD npm run start
