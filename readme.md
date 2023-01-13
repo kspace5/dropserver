@@ -1,7 +1,7 @@
  
 ## file-server: a command-line file server  
 
- Based on [kineviz file server in github](https://github.com/nodeapps/file-server)
+ Forked from and based on [kineviz file server in github](https://github.com/nodeapps/file-server)
  
  
 ### Installing globally:
